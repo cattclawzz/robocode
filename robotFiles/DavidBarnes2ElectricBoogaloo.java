@@ -1,72 +1,73 @@
-package robotFiles;
+package DB2EB;
 import robocode.util.Utils;
 import robocode.*;
 import java.awt.geom.Point2D;
 import java.awt.Color;
 
-public class DavidBarnes extends AdvancedRobot{
+public class DavidBarnes2ElectricBoogaloo extends AdvancedRobot{
 	private byte moveDirection = 1;
 	private double oldEnemyHeading = 0;
 
-	//-- Target lock (for melee / 1v1v1+) --
+	//-- Target lock -- 
 	private String targetName = null;
 	private long targetLastSeen = 0;
-	private static final long TARGET_TIMEOUT = 30; // ticks before we give up on a lost target
+	private static final long TARGET_TIMEOUT = 30; // ticks before we give up on a lost target (
 
 	public void run() {
-		//-- Make him pink--
+		//-- Make him PINK--
 		setBodyColor(Color.GREEN);
 		setGunColor(Color.GREEN);
 		setRadarColor(Color.GREEN);
 		setScanColor(Color.GREEN);
 		setBulletColor(Color.GREEN);
+		
 		//-- Perfect Lock --
+		// There were built in things to do auto compensation for the gun moving aipdjaskldjk
+		setAdjustGunForRobotTurn(true);
+		setAdjustRadarForRobotTurn(true);
+		setAdjustRadarForGunTurn(true);
+
 		while(true){
 			if (getRadarTurnRemaining() == 0.0){
             	setTurnRadarRightRadians(Double.POSITIVE_INFINITY);
 			}
-			//-- collision detection + dodge movement --
-			//-- occasional random reversal so movement isn't a smooth, predictable orbit --
-			if (Math.random() < 0.06) {
+			//-- collision detection + dodge--
+			//-- occasional random reversal--
+			if (Math.random() < 0.04) {
 				moveDirection *= -1;
 			}
-			//-- vary step distance a bit too, same reason --
+			//-- vary step distance for dodge --
 			setAhead(moveDirection * (60 + Math.random() * 60));
 
-			setFire(1.9); //shoot (non-blocking, queued with everything else)
-	        execute(); //flushes all queued set...() commands for this tick and advances one turn
+			setFire(1.9); //shoot non-blocking
+	        execute(); //flushes all queued set...() commands for this tick and advances one turn (Idk google ai said this is what it does)
 		}
 	}
 
 	public void onScannedRobot(ScannedRobotEvent e){
-		//-- Target lock: pick a target if we don't have one, or if ours has gone stale --
+		//-- pick a target if we don't have one --
 		if (targetName == null || (!e.getName().equals(targetName) && getTime() - targetLastSeen > TARGET_TIMEOUT)) {
 			targetName = e.getName();
 		}
-		//-- Only act on scans of our current target, ignore everyone else --
+		//-- Picks a target instead of everyone --
 		if (!e.getName().equals(targetName)) {
 			return;
 		}
 		targetLastSeen = getTime();
 
 		//-- Perfect Lock --
-		double radarTurn = Utils.normalRelativeAngle((getHeadingRadians() + e.getBearingRadians()) - getRadarHeadingRadians());
-		double extraTurn = Math.min(Math.atan(36.0 / e.getDistance() ), Rules.RADAR_TURN_RATE_RADIANS);
+		setTurnRadarRightRadians(Utils.normalRelativeAngle(
+			(getHeadingRadians() + e.getBearingRadians()) - getRadarHeadingRadians()
+		) * 2);
 
-		if (radarTurn < 0) {radarTurn -= extraTurn;}
-    	else {radarTurn += extraTurn;}
-
-		setTurnRadarRightRadians(radarTurn);
-
-		//-- colision detection / orbit movement --
-		//-- small random wobble added to the orbit angle so the radius isn't perfectly constant --
+		//-- collision detection / orbit movement --
+		//-- small random wobble added for dodge --
 		setTurnRight(Utils.normalRelativeAngleDegrees(
 			e.getBearing() + 90 - (15 * moveDirection) + (Math.random() * 20 - 10)));
 
 		//-- Shooting --
-		//-- scale power down at range for faster, harder-to-dodge bullets; floor at ~1.9,
-		//   the empirically-favored low end from robowiki discussion; cap at 3.0 and never
-		//   exceed current energy --
+		//   scale power down at range; floor at ~1.9,
+		//   cap at 3.0
 		double bulletPower = Math.min(3.0, Math.max(1.9, Math.min(getEnergy(), 400.0 / e.getDistance())));
 
 		double myX = getX();
@@ -102,13 +103,10 @@ public class DavidBarnes extends AdvancedRobot{
 
 		double theta = Utils.normalAbsoluteAngle(Math.atan2(
     	predictedX - getX(), predictedY - getY()));
-		setTurnRadarRightRadians(Utils.normalRelativeAngle(
-		absoluteBearing - getRadarHeadingRadians()));
 		setTurnGunRightRadians(Utils.normalRelativeAngle(
 		theta - getGunHeadingRadians()));
 
-		//-- only fire once the gun is close enough to on-target, so shots aren't
-		//   wasted while the gun is still mid-swing --
+		//-- only fire once the gun is aimed accurately enough --
 		if (Math.abs(getGunTurnRemaining()) < 10.0) {
 			setFire(bulletPower);
 		}
@@ -122,8 +120,7 @@ public class DavidBarnes extends AdvancedRobot{
 	    moveDirection *= -1;
 	}
 
-	//-- target lock upkeep: if our locked target dies, drop the lock so we
-	//   pick a fresh one on the next scan instead of waiting out the timeout --
+	//-- target lock upkeep: if our locked target dies, drop the lock --
 	public void onRobotDeath(RobotDeathEvent e) {
 	    if (e.getName().equals(targetName)) {
 	        targetName = null;
