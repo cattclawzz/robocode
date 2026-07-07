@@ -11,7 +11,7 @@ public class DavidBarnes2ElectricBoogaloo extends AdvancedRobot{
 	//-- Target lock -- 
 	private String targetName = null;
 	private long targetLastSeen = 0;
-	private static final long TARGET_TIMEOUT = 30; // ticks before we give up on a lost target
+	private static final long TARGET_TIMEOUT = 30; // ticks before we give up on a lost target (
 
 	public void run() {
 		//-- Make him PINK--
@@ -21,6 +21,8 @@ public class DavidBarnes2ElectricBoogaloo extends AdvancedRobot{
 		setScanColor(Color.GREEN);
 		setBulletColor(Color.GREEN);
 		
+		
+		
 		//-- Perfect Lock --
 		// There were built in things to do auto compensation for the gun moving aipdjaskldjk
 		setAdjustGunForRobotTurn(true);
@@ -28,6 +30,23 @@ public class DavidBarnes2ElectricBoogaloo extends AdvancedRobot{
 		setAdjustRadarForGunTurn(true);
 
 		while(true){
+		
+			//-- Custom RGB Fade (#07FFFF to #FF66CC) --
+			// Change 0.05 to make it fade faster (higher) or slower (lower)
+			double fadeFactor = (Math.sin(getTime() * 0.1) + 1.0) / 2.0;
+			
+			int r = (int)(7 + (255 - 7) * fadeFactor);
+			int g = (int)(255 + (102 - 255) * fadeFactor);
+			int b = (int)(255 + (204 - 255) * fadeFactor);
+			Color fadeColor = new Color(r, g, b);
+			
+			setBodyColor(fadeColor);
+			setGunColor(fadeColor);
+			setRadarColor(fadeColor);
+			setScanColor(fadeColor);
+			setBulletColor(fadeColor);
+			
+			
 			if (getRadarTurnRemaining() == 0.0){
             	setTurnRadarRightRadians(Double.POSITIVE_INFINITY);
 			}
