@@ -32,8 +32,8 @@ public class DavidBarnes2ElectricBoogaloo extends AdvancedRobot{
 		while(true){
 		
 			//-- Custom RGB Fade (#07FFFF to #FF66CC) --
-			// Change 0.05 to make it fade faster (higher) or slower (lower)
-			double fadeFactor = (Math.sin(getTime() * 0.1) + 1.0) / 2.0;
+			// Change the first number after * to make it fade faster (higher) or slower (lower)
+			double fadeFactor = (Math.sin(getTime() * 1.5) + 1.0) / 2.0;
 			
 			int r = (int)(7 + (255 - 7) * fadeFactor);
 			int g = (int)(255 + (102 - 255) * fadeFactor);
