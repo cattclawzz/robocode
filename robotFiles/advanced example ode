@@ -19,3 +19,9 @@ public class MyAdvancedRobot extends AdvancedRobot {
         }
     }
 }
+
+
+
+
+// be 90 degrees to the target
+setTurnRight(normalizeBearing(enemy.getBearing() + 90));
