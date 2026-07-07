@@ -11,7 +11,7 @@ public class DavidBarnes2ElectricBoogaloo extends AdvancedRobot{
 	//-- Target lock -- 
 	private String targetName = null;
 	private long targetLastSeen = 0;
-	private static final long TARGET_TIMEOUT = 30; // ticks before we give up on a lost target (
+	private static final long TARGET_TIMEOUT = 30; // ticks before we give up on a lost target
 
 	public void run() {
 		//-- Make him PINK--
