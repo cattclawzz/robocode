@@ -3,14 +3,18 @@ import robocode.util.Utils;
 import robocode.*;
 
 public class KevinBarnes extends AdvancedRobot{
+	private byte moveDirection = 1;
 	public void run() {
 		//-- Perfect Lock --
 		while(true){
 			if (getRadarTurnRemaining() == 0.0){
             	setTurnRadarRightRadians( Double.POSITIVE_INFINITY );
 			}
+			//-- collision detection --
+			setAhead(moveDirection * 100);
 	        execute();
 		}
+
 	}
 	
 	public void onScannedRobot(ScannedRobotEvent e){
@@ -22,7 +26,14 @@ public class KevinBarnes extends AdvancedRobot{
     	else{radarTurn += extraTurn;}
 		
 		setTurnRadarRightRadians(radarTurn);
-		
-		
 	}
+	
+	//-- collision detection --
+	public void onHitWall(HitWallEvent e) {
+	    moveDirection *= -1;
+	}
+	public void onHitRobot(HitRobotEvent e) {
+	    moveDirection *= -1;
+	}
+
 }
