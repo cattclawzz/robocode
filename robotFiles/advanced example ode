@@ -1,0 +1,21 @@
+package myPackage;
+import robocode.*;
+
+public class MyAdvancedRobot extends AdvancedRobot {
+    public void run() {
+        // Set body to continuously turn left 
+        setTurnLeft(90);
+        
+        // Set robot to move forward 100 pixels
+        setAhead(100);
+        
+        // Execute the set commands above
+        execute(); 
+        
+        // Loop the actions
+        while(true) {
+            ahead(100);
+            turnGunRight(360);
+        }
+    }
+}
