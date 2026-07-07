@@ -1,3 +1,5 @@
+// https://robowiki.net/wiki/Circular_Targeting
+
 // advanced robot formatting
 package myPackage;
 import robocode.*;
