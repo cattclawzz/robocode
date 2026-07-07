@@ -39,3 +39,7 @@ public void onHitRobot(HitRobotEvent e) {
 if (getVelocity() == 0){
     moveDirection *= -1;
 }
+
+
+//Many bots reduce fire power when the opponent is very far away or increase it when the enemy is very close.
+//Using maximum power at a distance of approximately 100 pixels is a common tactic against rambots.
