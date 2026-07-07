@@ -6,7 +6,7 @@ import java.awt.Color;
 
 public class KevinBarnes extends AdvancedRobot{
 	private byte moveDirection = 1;
-	private double oldEnemyHeading =0;
+	private double oldEnemyHeading = 0;
 	public void run() {
 		//-- Make him pink--
 		setBodyColor(Color.PINK);
@@ -36,7 +36,7 @@ public class KevinBarnes extends AdvancedRobot{
 		double extraTurn = Math.min(Math.atan(36.0 / e.getDistance() ), Rules.RADAR_TURN_RATE_RADIANS);
 		
 		if (radarTurn < 0) {radarTurn -= extraTurn;}
-    	else{radarTurn += extraTurn;}
+    	else {radarTurn += extraTurn;}
 		
 		setTurnRadarRightRadians(radarTurn);
 
@@ -57,10 +57,10 @@ public class KevinBarnes extends AdvancedRobot{
 	
 		double deltaTime = 0;
 		double battleFieldHeight = getBattleFieldHeight(), 
-	       battleFieldWidth = getBattleFieldWidth();
+	    battleFieldWidth = getBattleFieldWidth();
 		double predictedX = enemyX, predictedY = enemyY;
 		while((++deltaTime) * (20.0 - 3.0 * bulletPower) < 
-	      Point2D.Double.distance(myX, myY, predictedX, predictedY)){		
+	    Point2D.Double.distance(myX, myY, predictedX, predictedY)){		
 		predictedX += Math.sin(enemyHeading) * enemyVelocity;
 		predictedY += Math.cos(enemyHeading) * enemyVelocity;
 		enemyHeading += enemyHeadingChange;
@@ -68,13 +68,12 @@ public class KevinBarnes extends AdvancedRobot{
 			|| predictedY < 18.0
 			|| predictedX > battleFieldWidth - 18.0
 			|| predictedY > battleFieldHeight - 18.0){
-	
-			predictedX = Math.min(Math.max(18.0, predictedX), 
-			    battleFieldWidth - 18.0);	
-			predictedY = Math.min(Math.max(18.0, predictedY), 
-			    battleFieldHeight - 18.0);
-			break;
-	}
+				predictedX = Math.min(Math.max(18.0, predictedX), 
+				battleFieldWidth - 18.0);	
+				predictedY = Math.min(Math.max(18.0, predictedY), 
+				battleFieldHeight - 18.0);
+				break;
+		}
 }
 	double theta = Utils.normalAbsoluteAngle(Math.atan2(
     	predictedX - getX(), predictedY - getY()));
