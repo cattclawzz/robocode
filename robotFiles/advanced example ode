@@ -24,4 +24,17 @@ public class MyAdvancedRobot extends AdvancedRobot {
 
 
 // be 90 degrees to the target
-setTurnRight(normalizeBearing(enemy.getBearing() + 90));
+setTurnRight(normalizeBearing(enemy.getBearing() + 90 - (15 * moveDirection)));
+
+// dodge code
+
+public void onHitWall(HitWallEvent e) {
+    moveDirection *= -1;
+}
+public void onHitRobot(HitRobotEvent e) {
+    moveDirection *= -1;
+}
+
+if (getVelocity() == 0){
+    moveDirection *= -1;
+}
