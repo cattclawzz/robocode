@@ -8,7 +8,7 @@ public class KevinBarnes extends AdvancedRobot{
 		//-- Perfect Lock --
 		while(true){
 			if (getRadarTurnRemaining() == 0.0){
-            	setTurnRadarRightRadians( Double.POSITIVE_INFINITY );
+            	setTurnRadarRightRadians(Double.POSITIVE_INFINITY);
 			}
 			//-- collision detection --
 			setAhead(moveDirection * 100);
@@ -18,7 +18,6 @@ public class KevinBarnes extends AdvancedRobot{
 
 	        execute(); //I dont know what this does
 		}
-
 	}
 	
 	public void onScannedRobot(ScannedRobotEvent e){
