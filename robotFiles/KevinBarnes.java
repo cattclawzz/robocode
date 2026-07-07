@@ -12,7 +12,8 @@ public class KevinBarnes extends AdvancedRobot{
 			}
 			//-- collision detection --
 			setAhead(moveDirection * 100);
-	        execute();
+			
+	        execute(); //I dont know what this does
 		}
 
 	}
@@ -26,6 +27,9 @@ public class KevinBarnes extends AdvancedRobot{
     	else{radarTurn += extraTurn;}
 		
 		setTurnRadarRightRadians(radarTurn);
+		
+		//colision detection
+		setTurnRight(Utils.normalRelativeAngleDegrees(e.getBearing() + 90 - (15 * moveDirection)));
 	}
 	
 	//-- collision detection --
