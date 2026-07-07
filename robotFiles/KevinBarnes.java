@@ -1,10 +1,19 @@
 package robotFiles;
 import robocode.util.Utils;
 import robocode.*;
+import java.awt.Color;
 
 public class KevinBarnes extends AdvancedRobot{
 	private byte moveDirection = 1;
 	public void run() {
+	
+		//-- Make him pink--
+		setBodyColor(Color.PINK);
+		setGunColor(Color.PINK);
+		setRadarColor(Color.PINK);
+		setScanColor(Color.PINK);
+		setBulletColor(Color.PINK);
+
 		//-- Perfect Lock --
 		while(true){
 			if (getRadarTurnRemaining() == 0.0){
