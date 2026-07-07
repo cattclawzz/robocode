@@ -4,6 +4,7 @@ import robocode.*;
 
 public class KevinBarnes extends AdvancedRobot{
 	public void run() {
+		//-- Perfect Lock --
 		while(true){
 			if (getRadarTurnRemaining() == 0.0){
             	setTurnRadarRightRadians( Double.POSITIVE_INFINITY );
@@ -13,6 +14,7 @@ public class KevinBarnes extends AdvancedRobot{
 	}
 	
 	public void onScannedRobot(ScannedRobotEvent e){
+		//-- Perfect Lock --
 		double radarTurn = Utils.normalRelativeAngle((getHeadingRadians() + e.getBearingRadians()) - getRadarHeadingRadians());
 		double extraTurn = Math.min(Math.atan(36.0 / e.getDistance() ), Rules.RADAR_TURN_RATE_RADIANS);
 		
@@ -20,5 +22,7 @@ public class KevinBarnes extends AdvancedRobot{
     	else{radarTurn += extraTurn;}
 		
 		setTurnRadarRightRadians(radarTurn);
+		
+		
 	}
 }
