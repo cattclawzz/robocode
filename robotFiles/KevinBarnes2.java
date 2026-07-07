@@ -4,16 +4,16 @@ import robocode.*;
 import java.awt.geom.Point2D;
 import java.awt.Color;
 
-public class KevinBarnes extends AdvancedRobot{
+public class DavidBarnes extends AdvancedRobot{
 	private byte moveDirection = 1;
 	private double oldEnemyHeading = 0;
 	public void run() {
 		//-- Make him pink--
-		setBodyColor(Color.PINK);
-		setGunColor(Color.PINK);
-		setRadarColor(Color.PINK);
-		setScanColor(Color.PINK);
-		setBulletColor(Color.PINK);	
+		setBodyColor(Color.GREEN);
+		setGunColor(Color.GREEN);
+		setRadarColor(Color.GREEN);
+		setScanColor(Color.GREEN);
+		setBulletColor(Color.GREEN);	
 
 		//-- Perfect Lock --
 		while(true){
@@ -23,7 +23,7 @@ public class KevinBarnes extends AdvancedRobot{
 			//-- collision detection --
 			setAhead(moveDirection * 100);
 			
-			fire(1.9); //shoot
+			setFire(1.9);  //shoot
 
 	        execute(); //I dont know what this does
 		}
@@ -81,7 +81,7 @@ public class KevinBarnes extends AdvancedRobot{
 		absoluteBearing - getRadarHeadingRadians()));
 		setTurnGunRightRadians(Utils.normalRelativeAngle(
 		theta - getGunHeadingRadians()));
-		fire(3);
+		setFire(bulletPower);
 	}
 	
 	//-- collision detection --
