@@ -12,6 +12,8 @@ public class KevinBarnes extends AdvancedRobot{
 			}
 			//-- collision detection --
 			setAhead(moveDirection * 100);
+			
+			fire(1.9); //shoot
 
 	        execute(); //I dont know what this does
 		}
@@ -29,6 +31,10 @@ public class KevinBarnes extends AdvancedRobot{
 
 		//-- colision detection --
 		setTurnRight(Utils.normalRelativeAngleDegrees(e.getBearing() + 90 - (15 * moveDirection)));
+		
+		//-- Shooting --
+		double absoluteBearing = getHeadingRadians() + e.getBearingRadians();
+		setTurnGunRightRadians(robocode.util.Utils.normalRelativeAngle(absoluteBearing - getGunHeadingRadians()));
 	}
 	
 	//-- collision detection --
@@ -38,5 +44,4 @@ public class KevinBarnes extends AdvancedRobot{
 	public void onHitRobot(HitRobotEvent e) {
 	    moveDirection *= -1;
 	}
-
 }
