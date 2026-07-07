@@ -27,6 +27,9 @@ public class MyAdvancedRobot extends AdvancedRobot {
 // be 90 degrees to the target
 setTurnRight(normalizeBearing(enemy.getBearing() + 90 - (15 * moveDirection)));
 
+setTurnRight(robocode.util.Utils.normalRelativeAngleDegrees(enemy.getBearing() + 90 - (15 * moveDirection))); // this one maybe works
+
+
 // dodge code
 
 public void onHitWall(HitWallEvent e) {
